@@ -15,6 +15,8 @@ val minecraftVersionRange: String = property("minecraft_version_range").toString
 val neoVersion: String = property("neo_version").toString()
 val neoVersionRange: String = property("neo_version_range").toString()
 val loaderVersionRange: String = property("loader_version_range").toString()
+val mekanismVersion: String = property("mekanism_version").toString()
+val mekanismVersionRange: String = property("mekanism_version_range").toString()
 val parchmentMinecraftVersion: String = property("parchment_minecraft_version").toString()
 val parchmentMappingsVersion: String = property("parchment_mappings_version").toString()
 val modId: String = property("mod_id").toString()
@@ -34,6 +36,10 @@ group = modGroupId
 
 repositories {
     mavenLocal()
+    maven {
+        name = "ModMaven"
+        url = uri("https://modmaven.dev/")
+    }
 }
 
 base {
@@ -97,6 +103,8 @@ neoForge {
 }
 
 dependencies {
+    compileOnly("mekanism:Mekanism:$mekanismVersion:api")
+    runtimeOnly("mekanism:Mekanism:$mekanismVersion")
 }
 
 tasks.withType<JavaCompile>().configureEach {
@@ -132,6 +140,7 @@ val generateModMetadata by tasks.registering(ProcessResources::class) {
         "neo_version" to neoVersion,
         "neo_version_range" to neoVersionRange,
         "loader_version_range" to loaderVersionRange,
+        "mekanism_version_range" to mekanismVersionRange,
         "mod_id" to modId,
         "mod_name" to modName,
         "mod_license" to modLicense,
@@ -151,20 +160,6 @@ tasks.processResources {
         rename("LICENSE", licenseFileName)
     }
     dependsOn(generateModMetadata)
-}
-
-val preparePublish by tasks.registering(Sync::class) {
-    group = "publishing"
-    description = "Collects release artifacts for publishing."
-
-    dependsOn(tasks.jar, tasks.named("sourcesJar"))
-
-    into(layout.buildDirectory.dir("publish"))
-    from(tasks.jar)
-    from(tasks.named("sourcesJar"))
-    from("README.md")
-    from("CHANGELOG.md")
-    from("LICENSE")
 }
 
 sourceSets {
@@ -198,6 +193,14 @@ publisher {
     setJavaVersions(21)
     artifact.set(tasks.named("jar"))
     addAdditionalFile(tasks.named("sourcesJar"))
+
+    curseDepends {
+        optional("mekanism")
+    }
+
+    modrinthDepends {
+        optional("mekanism")
+    }
 
     github {
         repo(githubRepository)
