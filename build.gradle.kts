@@ -17,6 +17,8 @@ val neoVersionRange: String = property("neo_version_range").toString()
 val loaderVersionRange: String = property("loader_version_range").toString()
 val mekanismVersion: String = property("mekanism_version").toString()
 val mekanismVersionRange: String = property("mekanism_version_range").toString()
+val ldlib2Version: String = property("ldlib2_version").toString()
+val ldlib2VersionRange: String = property("ldlib2_version_range").toString()
 val emiVersion: String = property("emi_version").toString()
 val jadeVersion: String = property("jade_version").toString()
 val parchmentMinecraftVersion: String = property("parchment_minecraft_version").toString()
@@ -49,6 +51,10 @@ repositories {
     maven {
         name = "Modrinth"
         url = uri("https://api.modrinth.com/maven")
+    }
+    maven {
+        name = "FirstDark"
+        url = uri("https://maven.firstdark.dev/snapshots")
     }
 }
 
@@ -115,6 +121,7 @@ neoForge {
 dependencies {
     compileOnly("mekanism:Mekanism:$mekanismVersion:api")
     runtimeOnly("mekanism:Mekanism:$mekanismVersion")
+    implementation("com.lowdragmc.ldlib2:ldlib2-neoforge-$minecraftVersion:$ldlib2Version:all")
     runtimeOnly("dev.emi:emi-neoforge:$emiVersion")
     runtimeOnly("maven.modrinth:jade:$jadeVersion")
 }
@@ -153,6 +160,7 @@ val generateModMetadata by tasks.registering(ProcessResources::class) {
         "neo_version_range" to neoVersionRange,
         "loader_version_range" to loaderVersionRange,
         "mekanism_version_range" to mekanismVersionRange,
+        "ldlib2_version_range" to ldlib2VersionRange,
         "mod_id" to modId,
         "mod_name" to modName,
         "mod_license" to modLicense,
@@ -208,10 +216,12 @@ publisher {
 
     curseDepends {
         optional("mekanism")
+        required("ldlib")
     }
 
     modrinthDepends {
         optional("mekanism")
+        required("ldlib")
     }
 
     github {
