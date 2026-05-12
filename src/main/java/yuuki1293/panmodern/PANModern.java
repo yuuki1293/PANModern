@@ -5,6 +5,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import org.slf4j.Logger;
+import yuuki1293.panmodern.datagen.DataGenerators;
 import yuuki1293.panmodern.registry.BlockEntities;
 import yuuki1293.panmodern.registry.Blocks;
 import yuuki1293.panmodern.registry.CreativeTabs;
@@ -20,6 +21,7 @@ public class PANModern {
         BlockEntities.BLOCK_ENTITY_TYPES.register(modEventBus);
         Items.ITEMS.register(modEventBus);
         CreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
+        modEventBus.addListener(DataGenerators::gatherData);
 
         LOGGER.debug("{} initialized", MODID);
     }
