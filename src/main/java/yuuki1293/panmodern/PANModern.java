@@ -5,6 +5,10 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import org.slf4j.Logger;
+import yuuki1293.panmodern.registry.BlockEntities;
+import yuuki1293.panmodern.registry.Blocks;
+import yuuki1293.panmodern.registry.CreativeTabs;
+import yuuki1293.panmodern.registry.Items;
 
 @Mod(PANModern.MODID)
 public class PANModern {
@@ -12,6 +16,11 @@ public class PANModern {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public PANModern(IEventBus modEventBus, ModContainer modContainer) {
+        Blocks.BLOCKS.register(modEventBus);
+        BlockEntities.BLOCK_ENTITY_TYPES.register(modEventBus);
+        Items.ITEMS.register(modEventBus);
+        CreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
+
         LOGGER.debug("{} initialized", MODID);
     }
 }

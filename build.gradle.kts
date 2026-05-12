@@ -17,6 +17,8 @@ val neoVersionRange: String = property("neo_version_range").toString()
 val loaderVersionRange: String = property("loader_version_range").toString()
 val mekanismVersion: String = property("mekanism_version").toString()
 val mekanismVersionRange: String = property("mekanism_version_range").toString()
+val emiVersion: String = property("emi_version").toString()
+val jadeVersion: String = property("jade_version").toString()
 val parchmentMinecraftVersion: String = property("parchment_minecraft_version").toString()
 val parchmentMappingsVersion: String = property("parchment_mappings_version").toString()
 val modId: String = property("mod_id").toString()
@@ -39,6 +41,14 @@ repositories {
     maven {
         name = "ModMaven"
         url = uri("https://modmaven.dev/")
+    }
+    maven {
+        name = "TerraformersMC"
+        url = uri("https://maven.terraformersmc.com/")
+    }
+    maven {
+        name = "Modrinth"
+        url = uri("https://api.modrinth.com/maven")
     }
 }
 
@@ -105,6 +115,8 @@ neoForge {
 dependencies {
     compileOnly("mekanism:Mekanism:$mekanismVersion:api")
     runtimeOnly("mekanism:Mekanism:$mekanismVersion")
+    runtimeOnly("dev.emi:emi-neoforge:$emiVersion")
+    runtimeOnly("maven.modrinth:jade:$jadeVersion")
 }
 
 tasks.withType<JavaCompile>().configureEach {
