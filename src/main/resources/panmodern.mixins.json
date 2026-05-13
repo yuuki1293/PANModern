@@ -3,10 +3,8 @@
   "minVersion": "0.8",
   "package": "yuuki1293.panmodern.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [
-  ],
-  "client": [
-  ],
+  "mixins": [],
+  "client": [],
   "injectors": {
     "defaultRequire": 1
   },

@@ -11,8 +11,6 @@ public class DataGenerators {
 
         generator.addProvider(event.includeClient(), new PANModernLanguageProvider(packOutput));
         generator.addProvider(
-            event.includeClient(),
-            new PANModernBlockStateProvider(packOutput, event.getExistingFileHelper())
-        );
+                event.includeClient(), new PANModernBlockStateProvider(packOutput, event.getExistingFileHelper()));
     }
 }

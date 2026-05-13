@@ -1,3 +1,4 @@
+import com.diffplug.spotless.LineEnding
 import com.hypherionmc.modpublisher.properties.CurseEnvironment
 import com.hypherionmc.modpublisher.properties.ModLoader
 import com.hypherionmc.modpublisher.properties.ReleaseType
@@ -8,6 +9,7 @@ plugins {
     idea
     id("net.neoforged.moddev") version "2.0.141"
     id("com.hypherionmc.modutils.modpublisher") version "2.1.+"
+    id("com.diffplug.spotless") version "8.0.0"
 }
 
 val minecraftVersion: String = property("minecraft_version").toString()
@@ -252,5 +254,27 @@ idea {
     module {
         isDownloadSources = true
         isDownloadJavadoc = true
+    }
+}
+
+spotless {
+    java {
+        target("src/**/java/**/*.java")
+        endWithNewline()
+        leadingSpacesToTabs(1)
+        removeUnusedImports()
+        palantirJavaFormat()
+        toggleOffOn()
+        setLineEndings(LineEnding.UNIX)
+
+        bumpThisNumberIfACustomStepChanges(1)
+    }
+
+    json {
+        target("src/**/resources/**/*.json")
+        biome()
+        leadingTabsToSpaces(2)
+        endWithNewline()
+        setLineEndings(LineEnding.UNIX)
     }
 }
