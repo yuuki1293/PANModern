@@ -1,11 +1,14 @@
 import com.hypherionmc.modpublisher.properties.CurseEnvironment
 import com.hypherionmc.modpublisher.properties.ModLoader
 import com.hypherionmc.modpublisher.properties.ReleaseType
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `java-library`
     `maven-publish`
     idea
+    kotlin("jvm") version "2.2.20"
     id("net.neoforged.moddev") version "2.0.141"
     id("com.hypherionmc.modutils.modpublisher") version "2.1.+"
     id("com.diffplug.spotless") version "8.0.0"
@@ -15,7 +18,8 @@ val minecraftVersion: String = property("minecraft_version").toString()
 val minecraftVersionRange: String = property("minecraft_version_range").toString()
 val neoVersion: String = property("neo_version").toString()
 val neoVersionRange: String = property("neo_version_range").toString()
-val loaderVersionRange: String = property("loader_version_range").toString()
+val kotlinforforgeVersion: String = property("kotlinforforge_version").toString()
+val kotlinforforgeVersionRange: String = property("kotlinforforge_version_range").toString()
 val mekanismVersion: String = property("mekanism_version").toString()
 val mekanismVersionRange: String = property("mekanism_version_range").toString()
 val ldlib2Version: String = property("ldlib2_version").toString()
@@ -58,6 +62,10 @@ repositories {
         name = "FirstDark"
         url = uri("https://maven.firstdark.dev/snapshots")
     }
+    maven {
+        name = "Kotlin for Forge"
+        url = uri("https://thedarkcolour.github.io/KotlinForForge/")
+    }
 }
 
 base {
@@ -67,6 +75,10 @@ base {
 java {
     withSourcesJar()
     toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
+
+kotlin {
+    jvmToolchain(21)
 }
 
 neoForge {
@@ -121,6 +133,7 @@ neoForge {
 }
 
 dependencies {
+    implementation("thedarkcolour:kotlinforforge-neoforge:$kotlinforforgeVersion")
     compileOnly("mekanism:Mekanism:$mekanismVersion:api")
     runtimeOnly("mekanism:Mekanism:$mekanismVersion")
     implementation("com.lowdragmc.ldlib2:ldlib2-neoforge-$minecraftVersion:$ldlib2Version:all")
@@ -131,6 +144,12 @@ dependencies {
 tasks.withType<JavaCompile>().configureEach {
     options.encoding = "UTF-8"
     options.release = 21
+}
+
+tasks.withType<KotlinCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_21)
+    }
 }
 
 tasks.jar {
@@ -160,7 +179,7 @@ val generateModMetadata by tasks.registering(ProcessResources::class) {
         "minecraft_version_range" to minecraftVersionRange,
         "neo_version" to neoVersion,
         "neo_version_range" to neoVersionRange,
-        "loader_version_range" to loaderVersionRange,
+        "kotlinforforge_version_range" to kotlinforforgeVersionRange,
         "mekanism_version_range" to mekanismVersionRange,
         "ldlib2_version_range" to ldlib2VersionRange,
         "mod_id" to modId,
@@ -217,11 +236,13 @@ publisher {
     addAdditionalFile(tasks.named("sourcesJar"))
 
     curseDepends {
+        required("kotlin-for-forge")
         optional("mekanism")
         required("ldlib")
     }
 
     modrinthDepends {
+        required("kotlin-for-forge")
         optional("mekanism")
         required("ldlib")
     }
