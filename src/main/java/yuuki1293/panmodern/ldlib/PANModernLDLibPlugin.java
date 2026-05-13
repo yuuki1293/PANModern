@@ -5,6 +5,7 @@ import com.lowdragmc.lowdraglib2.plugin.LDLibPlugin;
 
 @LDLibPlugin
 public class PANModernLDLibPlugin implements ILDLibPlugin {
+
     @Override
     public void onLoad() {
         // Register LDLib2 extensions here.
