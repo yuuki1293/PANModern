@@ -7,6 +7,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import yuuki1293.panmodern.PANModern;
 
+@SuppressWarnings("unused")
 public class Items {
 
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(PANModern.MODID);
