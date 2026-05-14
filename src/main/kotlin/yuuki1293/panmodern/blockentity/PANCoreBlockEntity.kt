@@ -1,6 +1,7 @@
 package yuuki1293.panmodern.blockentity
 
 import com.lowdragmc.lowdraglib2.gui.factory.BlockUIMenuType
+import com.lowdragmc.lowdraglib2.gui.slot.ItemHandlerSlot
 import com.lowdragmc.lowdraglib2.gui.ui.ModularUI
 import com.lowdragmc.lowdraglib2.gui.ui.UI
 import com.lowdragmc.lowdraglib2.gui.ui.data.ScrollDisplay
@@ -17,13 +18,14 @@ import com.lowdragmc.lowdraglib2.gui.ui.styletemplate.MCSprites
 import dev.vfyjxf.taffy.style.FlexDirection
 import dev.vfyjxf.taffy.style.FlexWrap
 import net.minecraft.core.BlockPos
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.items.ItemStackHandler
 import yuuki1293.panmodern.PANModern
 import yuuki1293.panmodern.registry.BlockEntities
 import yuuki1293.panmodern.registry.Blocks
-import yuuki1293.panmodern.registry.Items
 
 const val ITEM_SLOT_SIZE: Int = 18
 const val ITEM_LIST_ROW: Int = 10
@@ -33,6 +35,7 @@ class PANCoreBlockEntity(
     pos: BlockPos,
     blockState: BlockState,
 ) : BlockEntity(BlockEntities.PAN_CORE_BLOCK_ENTITY.get(), pos, blockState) {
+    val dummyItemHandler = ItemStackHandler(100)
 
     fun createUI(holder: BlockUIMenuType.BlockUIHolder): ModularUI {
         val root = element({
@@ -65,7 +68,8 @@ class PANCoreBlockEntity(
 
                 repeat(100) {
                     itemSlot({
-                        item = Items.PAN_CORE_ITEM.get().defaultInstance
+                        bind(ItemHandlerSlot(dummyItemHandler, it).setCanPlace { false }.setCanTake { false })
+                        dummyItemHandler.setStackInSlot(it, BuiltInRegistries.ITEM.byId(it+1).defaultInstance)
                     })
                 }
             }
