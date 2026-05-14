@@ -18,6 +18,8 @@ import com.lowdragmc.lowdraglib2.gui.ui.layout.px
 import com.lowdragmc.lowdraglib2.gui.ui.style.StylesheetManager
 import com.lowdragmc.lowdraglib2.gui.ui.styletemplate.MCSprites
 import com.lowdragmc.lowdraglib2.integration.xei.IngredientIO
+import dev.vfyjxf.taffy.style.AlignContent
+import dev.vfyjxf.taffy.style.AlignItems
 import dev.vfyjxf.taffy.style.FlexDirection
 import dev.vfyjxf.taffy.style.FlexWrap
 import net.minecraft.core.BlockPos
@@ -54,7 +56,12 @@ class PANAdapterBlockEntity(
         }) {
             label({ text = Blocks.PAN_ADAPTER_BLOCK.get().name })
 
-            element({}) {
+            element({
+                layout = {
+                    layout.wrap(FlexWrap.WRAP)
+                    justifyContent(AlignContent.CENTER)
+                }
+            }) {
                 scrollerView({
                     scrollerViewStyle = {
                         mode(ScrollerMode.VERTICAL)
@@ -80,6 +87,10 @@ class PANAdapterBlockEntity(
             }
 
             inventorySlots({
+                layout = {
+                    alignSelf(AlignItems.CENTER)
+                }
+
                 style = {
                     tooltips()
                 }

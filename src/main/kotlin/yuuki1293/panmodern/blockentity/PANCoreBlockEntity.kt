@@ -12,11 +12,14 @@ import com.lowdragmc.lowdraglib2.gui.ui.elements.label
 import com.lowdragmc.lowdraglib2.gui.ui.elements.scrollerView
 import com.lowdragmc.lowdraglib2.gui.ui.elements.withViewContainer
 import com.lowdragmc.lowdraglib2.gui.ui.inventorySlots
+import com.lowdragmc.lowdraglib2.gui.ui.layout.auto
 import com.lowdragmc.lowdraglib2.gui.ui.layout.px
 import com.lowdragmc.lowdraglib2.gui.ui.style.StylesheetManager
 import com.lowdragmc.lowdraglib2.gui.ui.styletemplate.MCSprites
+import dev.vfyjxf.taffy.style.AlignItems
 import dev.vfyjxf.taffy.style.FlexDirection
 import dev.vfyjxf.taffy.style.FlexWrap
+import dev.vfyjxf.taffy.style.TaffyDisplay
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
@@ -74,6 +77,10 @@ class PANCoreBlockEntity(
             }
 
             inventorySlots({
+                layout = {
+                    alignSelf(AlignItems.CENTER)
+                }
+
                 style = {
                     tooltips()
                 }
