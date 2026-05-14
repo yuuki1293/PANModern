@@ -9,4 +9,5 @@ object Items {
     val ITEMS: DeferredRegister.Items = DeferredRegister.createItems(PANModern.MODID)
 
     val PAN_CORE_ITEM: Supplier<BlockItem> = ITEMS.registerSimpleBlockItem(Blocks.PAN_CORE_BLOCK)
+    val PAN_ADAPTER_ITEM: Supplier<BlockItem> = ITEMS.registerSimpleBlockItem(Blocks.PAN_ADAPTER_BLOCK)
 }

@@ -21,6 +21,7 @@ object CreativeTabs {
                 .icon { Blocks.PAN_CORE_BLOCK.toStack() }
                 .displayItems { _, output ->
                     output.accept(Blocks.PAN_CORE_BLOCK.get().asItem())
+                    output.accept(Blocks.PAN_ADAPTER_BLOCK.get().asItem())
                 }
                 .build()
         },
