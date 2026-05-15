@@ -22,6 +22,8 @@ val kotlinforforgeVersion: String = property("kotlinforforge_version").toString(
 val kotlinforforgeVersionRange: String = property("kotlinforforge_version_range").toString()
 val mekanismVersion: String = property("mekanism_version").toString()
 val mekanismVersionRange: String = property("mekanism_version_range").toString()
+val ae2Version: String = property("ae2_version").toString()
+val ae2VersionRange: String = property("ae2_version_range").toString()
 val ldlib2Version: String = property("ldlib2_version").toString()
 val ldlib2VersionRange: String = property("ldlib2_version_range").toString()
 val emiVersion: String = property("emi_version").toString()
@@ -136,6 +138,8 @@ dependencies {
     implementation("thedarkcolour:kotlinforforge-neoforge:$kotlinforforgeVersion")
     compileOnly("mekanism:Mekanism:$mekanismVersion:api")
     runtimeOnly("mekanism:Mekanism:$mekanismVersion")
+    compileOnly("org.appliedenergistics:appliedenergistics2:$ae2Version:api")
+    runtimeOnly("org.appliedenergistics:appliedenergistics2:$ae2Version")
     implementation("com.lowdragmc.ldlib2:ldlib2-neoforge-$minecraftVersion:$ldlib2Version:all")
     runtimeOnly("dev.emi:emi-neoforge:$emiVersion")
     runtimeOnly("maven.modrinth:jade:$jadeVersion")
@@ -181,6 +185,7 @@ val generateModMetadata by tasks.registering(ProcessResources::class) {
         "neo_version_range" to neoVersionRange,
         "kotlinforforge_version_range" to kotlinforforgeVersionRange,
         "mekanism_version_range" to mekanismVersionRange,
+        "ae2_version_range" to ae2VersionRange,
         "ldlib2_version_range" to ldlib2VersionRange,
         "mod_id" to modId,
         "mod_name" to modName,
@@ -238,12 +243,14 @@ publisher {
     curseDepends {
         required("kotlin-for-forge")
         optional("mekanism")
+        optional("applied-energistics-2")
         required("ldlib")
     }
 
     modrinthDepends {
         required("kotlin-for-forge")
         optional("mekanism")
+        optional("ae2")
         required("ldlib")
     }
 

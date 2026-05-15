@@ -2,18 +2,23 @@ package yuuki1293.panmodern.blockentity
 
 import com.lowdragmc.lowdraglib2.gui.factory.BlockUIMenuType
 import com.lowdragmc.lowdraglib2.gui.slot.ItemHandlerSlot
+import com.lowdragmc.lowdraglib2.gui.sync.bindings.impl.DataBindingBuilder
 import com.lowdragmc.lowdraglib2.gui.ui.ModularUI
 import com.lowdragmc.lowdraglib2.gui.ui.UI
 import com.lowdragmc.lowdraglib2.gui.ui.data.ScrollDisplay
 import com.lowdragmc.lowdraglib2.gui.ui.data.ScrollerMode
 import com.lowdragmc.lowdraglib2.gui.ui.element
+import com.lowdragmc.lowdraglib2.gui.ui.elements.ItemSlot
 import com.lowdragmc.lowdraglib2.gui.ui.elements.asXeiPhantom
 import com.lowdragmc.lowdraglib2.gui.ui.elements.asXeiRecipeIngredient
+import com.lowdragmc.lowdraglib2.gui.ui.elements.asXeiRecipeSlot
 import com.lowdragmc.lowdraglib2.gui.ui.elements.itemSlot
 import com.lowdragmc.lowdraglib2.gui.ui.elements.label
 import com.lowdragmc.lowdraglib2.gui.ui.elements.scrollerView
 import com.lowdragmc.lowdraglib2.gui.ui.elements.withViewContainer
+import com.lowdragmc.lowdraglib2.gui.ui.event.UIEvents
 import com.lowdragmc.lowdraglib2.gui.ui.inventorySlots
+import com.lowdragmc.lowdraglib2.gui.ui.layout.pct
 import com.lowdragmc.lowdraglib2.gui.ui.layout.px
 import com.lowdragmc.lowdraglib2.gui.ui.style.StylesheetManager
 import com.lowdragmc.lowdraglib2.gui.ui.styletemplate.MCSprites
@@ -22,12 +27,16 @@ import dev.vfyjxf.taffy.style.AlignContent
 import dev.vfyjxf.taffy.style.AlignItems
 import dev.vfyjxf.taffy.style.FlexDirection
 import dev.vfyjxf.taffy.style.FlexWrap
+import dev.vfyjxf.taffy.style.JustifyContent
 import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.ItemStackHandler
 import yuuki1293.panmodern.PANModern
+import yuuki1293.panmodern.menu.slot.FakeSlot
 import yuuki1293.panmodern.registry.BlockEntities
 import yuuki1293.panmodern.registry.Blocks
 
@@ -58,7 +67,8 @@ class PANAdapterBlockEntity(
 
             element({
                 layout = {
-                    layout.wrap(FlexWrap.WRAP)
+                    flexDirection(FlexDirection.ROW)
+                    alignContent(AlignContent.CENTER)
                     justifyContent(AlignContent.CENTER)
                 }
             }) {
@@ -77,11 +87,38 @@ class PANAdapterBlockEntity(
 
                     repeat(81) {
                         itemSlot({
-                            bind(ItemHandlerSlot(ingredientsItemHandler, it).setCanPlace { false }.setCanTake { false })
+                            bind(FakeSlot(ingredientsItemHandler, it))
                         }) {
                             asXeiPhantom()
                             asXeiRecipeIngredient(IngredientIO.INPUT)
+
+                            events { slot ->
+                                UIEvents.CLICK += {
+                                    val carried = slot.modularUI?.menu?.carried ?: ItemStack.EMPTY
+                                    slot.setItem(carried)
+                                }
+                            }
                         }
+                    }
+                }
+
+                scrollerView({
+                    scrollerViewStyle = {
+                        mode(ScrollerMode.VERTICAL)
+                        verticalScrollDisplay(ScrollDisplay.ALWAYS)
+                    }
+                }) {
+                    withViewContainer {
+                        layout.flexDirection(FlexDirection.ROW)
+                        layout.wrap(FlexWrap.WRAP)
+                        layoutStyle.height(ITEM_LIST_ROW * ITEM_SLOT_SIZE)
+                        layoutStyle.width(ITEM_LIST_COLUMN * ITEM_SLOT_SIZE)
+                    }
+
+                    repeat(81) {
+                        itemSlot({
+                            bind(ItemHandlerSlot(ingredientsItemHandler, it).setCanPlace { false }.setCanTake { false })
+                        }) {}
                     }
                 }
             }

@@ -87,6 +87,13 @@ ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies."${mod_id}"]]
+modId = "ae2"
+type = "optional"
+versionRange = "${ae2_version_range}"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies."${mod_id}"]]
 modId = "ldlib2"
 type = "required"
 versionRange = "${ldlib2_version_range}"

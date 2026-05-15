@@ -8,7 +8,11 @@ import yuuki1293.panmodern.registry.CreativeTabs
 
 class PANModernLanguageProvider(output: PackOutput) : LanguageProvider(output, PANModern.MODID, "en_us") {
     override fun addTranslations() {
+        // Blocks
         add(Blocks.PAN_CORE_BLOCK.get(), "PAN Core")
+        add(Blocks.PAN_ADAPTER_BLOCK.get(), "PAN Adapter")
+
+        // Creative Tab
         add(CreativeTabs.CREATIVE_MODE_TAB_KEY, "PAN Modern")
     }
 }
