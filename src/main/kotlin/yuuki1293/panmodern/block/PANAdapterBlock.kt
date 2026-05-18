@@ -19,10 +19,8 @@ class PANAdapterBlock(properties: Properties) :
     EntityBlock,
     BlockUIMenuType.BlockUI {
 
-    override fun newBlockEntity(
-        blockPos: BlockPos,
-        blockState: BlockState,
-    ): BlockEntity = PANAdapterBlockEntity(blockPos, blockState)
+    override fun newBlockEntity(blockPos: BlockPos, blockState: BlockState): BlockEntity =
+        PANAdapterBlockEntity(blockPos, blockState)
 
     override fun useWithoutItem(
         state: BlockState,

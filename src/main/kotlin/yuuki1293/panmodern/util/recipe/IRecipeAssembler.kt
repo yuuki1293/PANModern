@@ -7,9 +7,5 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 
 interface IRecipeAssembler<in I : RecipeInput> {
-    fun assemble(
-        level: Level,
-        recipeType: RecipeType<out Recipe<out RecipeInput?>?>,
-        input: I,
-    ): List<ItemStack>
+    fun assemble(level: Level, recipeType: RecipeType<out Recipe<out RecipeInput?>?>, input: I): List<ItemStack>
 }

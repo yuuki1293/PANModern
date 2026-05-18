@@ -18,10 +18,8 @@ class PANCoreBlock(properties: Properties) :
     Block(properties),
     EntityBlock,
     BlockUIMenuType.BlockUI {
-    override fun newBlockEntity(
-        blockPos: BlockPos,
-        blockState: BlockState,
-    ): BlockEntity = PANCoreBlockEntity(blockPos, blockState)
+    override fun newBlockEntity(blockPos: BlockPos, blockState: BlockState): BlockEntity =
+        PANCoreBlockEntity(blockPos, blockState)
 
     override fun useWithoutItem(
         state: BlockState,

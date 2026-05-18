@@ -12,10 +12,7 @@ import yuuki1293.panmodern.registry.CreativeTabs
 import yuuki1293.panmodern.registry.Items
 
 @Mod(PANModern.MODID)
-class PANModern(
-    modEventBus: IEventBus,
-    @Suppress("UNUSED_PARAMETER") modContainer: ModContainer,
-) {
+class PANModern(modEventBus: IEventBus, @Suppress("UNUSED_PARAMETER") modContainer: ModContainer) {
     init {
         Blocks.BLOCKS.register(modEventBus)
         BlockEntities.BLOCK_ENTITY_TYPES.register(modEventBus)

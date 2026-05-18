@@ -38,10 +38,8 @@ import yuuki1293.panmodern.registry.BlockEntities
 import yuuki1293.panmodern.registry.Blocks
 import yuuki1293.panmodern.util.RecipeUtils
 
-class PANAdapterBlockEntity(
-    pos: BlockPos,
-    blockState: BlockState,
-) : BlockEntity(BlockEntities.PAN_ADAPTER_BLOCK_ENTITY.get(), pos, blockState) {
+class PANAdapterBlockEntity(pos: BlockPos, blockState: BlockState) :
+    BlockEntity(BlockEntities.PAN_ADAPTER_BLOCK_ENTITY.get(), pos, blockState) {
     companion object {
         const val ITEM_SLOT_SIZE: Float = 18f
         const val ITEM_LIST_ROW: Int = 3
@@ -104,10 +102,8 @@ class PANAdapterBlockEntity(
             }
     }
 
-    private fun ItemStackHandler.toItemStacks(): List<ItemStack> {
-        return List(slots) { slot ->
-            getStackInSlot(slot)
-        }
+    private fun ItemStackHandler.toItemStacks(): List<ItemStack> = List(slots) { slot ->
+        getStackInSlot(slot)
     }
 
     private fun clearResultItems() {

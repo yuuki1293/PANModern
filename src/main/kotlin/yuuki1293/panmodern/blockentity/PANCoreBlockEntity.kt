@@ -30,10 +30,8 @@ import yuuki1293.panmodern.PANModern
 import yuuki1293.panmodern.registry.BlockEntities
 import yuuki1293.panmodern.registry.Blocks
 
-class PANCoreBlockEntity(
-    pos: BlockPos,
-    blockState: BlockState,
-) : BlockEntity(BlockEntities.PAN_CORE_BLOCK_ENTITY.get(), pos, blockState) {
+class PANCoreBlockEntity(pos: BlockPos, blockState: BlockState) :
+    BlockEntity(BlockEntities.PAN_CORE_BLOCK_ENTITY.get(), pos, blockState) {
     companion object {
         const val ITEM_SLOT_SIZE: Float = 18f
         const val ITEM_LIST_ROW: Int = 10

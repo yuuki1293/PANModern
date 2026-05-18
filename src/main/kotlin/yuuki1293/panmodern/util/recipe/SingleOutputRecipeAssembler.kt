@@ -24,12 +24,10 @@ object SingleOutputRecipeAssembler : IRecipeAssembler<RecipeInput> {
         level: Level,
         recipeType: RecipeType<out Recipe<out RecipeInput?>?>,
         input: RecipeInput,
-    ): ItemStack {
-        return level.recipeManager
-            .getRecipeFor(recipeType as RecipeType<Recipe<RecipeInput>>, input, level)
-            .map { recipeHolder ->
-                recipeHolder.value().assemble(input, level.registryAccess())
-            }
-            .orElse(ItemStack.EMPTY)
-    }
+    ): ItemStack = level.recipeManager
+        .getRecipeFor(recipeType as RecipeType<Recipe<RecipeInput>>, input, level)
+        .map { recipeHolder ->
+            recipeHolder.value().assemble(input, level.registryAccess())
+        }
+        .orElse(ItemStack.EMPTY)
 }
