@@ -37,6 +37,18 @@ class PANAdapterBlock(properties: Properties) :
         return InteractionResult.SUCCESS
     }
 
+    override fun neighborChanged(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        neighborBlock: Block,
+        neighborPos: BlockPos,
+        movedByPiston: Boolean,
+    ) {
+        super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
+        (level.getBlockEntity(pos) as? PANAdapterBlockEntity)?.updateRecipeType()
+    }
+
     override fun createUI(holder: BlockUIMenuType.BlockUIHolder): ModularUI? {
         val blockEntity = holder.player
             .level()

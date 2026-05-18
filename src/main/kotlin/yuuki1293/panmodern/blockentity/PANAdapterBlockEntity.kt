@@ -19,14 +19,19 @@ import dev.vfyjxf.taffy.style.AlignItems
 import dev.vfyjxf.taffy.style.FlexDirection
 import dev.vfyjxf.taffy.style.FlexWrap
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeInput
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.ItemStackHandler
 import yuuki1293.panmodern.PANModern
 import yuuki1293.panmodern.registry.BlockEntities
 import yuuki1293.panmodern.registry.Blocks
+import yuuki1293.panmodern.util.RecipeUtils
 
 class PANAdapterBlockEntity(
     pos: BlockPos,
@@ -38,8 +43,73 @@ class PANAdapterBlockEntity(
         const val ITEM_LIST_COLUMN: Int = 3
     }
 
-    val ingredientsItemHandler = ItemStackHandler(81)
+    val ingredientsItemHandler = object : ItemStackHandler(81) {
+        override fun onContentsChanged(slot: Int) {
+            super.onContentsChanged(slot)
+            refreshOutput()
+        }
+    }
     val resultItemHandler = ItemStackHandler(81)
+    var recipeType: RecipeType<out Recipe<out RecipeInput?>?>? = null
+
+    override fun onLoad() {
+        super.onLoad()
+        refreshRecipeType()
+    }
+
+    fun updateRecipeType() {
+        if (refreshRecipeType()) {
+            super.setChanged()
+        }
+    }
+
+    private fun refreshRecipeType(): Boolean {
+        val level = level
+        if (level == null) {
+            refreshOutput()
+            return false
+        }
+
+        val updatedRecipeType = Direction.entries.firstNotNullOfOrNull { direction ->
+            val adjacentBlock = level
+                .getBlockState(blockPos.relative(direction))
+                .block
+            RecipeUtils.getRecipeType(adjacentBlock)
+        }
+
+        if (recipeType == updatedRecipeType) {
+            refreshOutput()
+            return false
+        }
+
+        recipeType = updatedRecipeType
+        refreshOutput()
+        return true
+    }
+
+    private fun refreshOutput() {
+        clearResultItems()
+
+        val level = level ?: return
+        val recipeType = recipeType ?: return
+        RecipeUtils.getOutputs(level, recipeType, ingredientsItemHandler.toItemStacks())
+            .take(resultItemHandler.slots)
+            .forEachIndexed { slot, output ->
+                resultItemHandler.setStackInSlot(slot, output)
+            }
+    }
+
+    private fun ItemStackHandler.toItemStacks(): List<ItemStack> {
+        return List(slots) { slot ->
+            getStackInSlot(slot)
+        }
+    }
+
+    private fun clearResultItems() {
+        repeat(resultItemHandler.slots) { slot ->
+            resultItemHandler.setStackInSlot(slot, ItemStack.EMPTY)
+        }
+    }
 
     fun createUI(holder: BlockUIMenuType.BlockUIHolder): ModularUI {
         val root = element({
@@ -111,13 +181,10 @@ class PANAdapterBlockEntity(
 
                     repeat(81) {
                         itemSlot {
-                            asXeiPhantom()
-                            asXeiRecipeIngredient(IngredientIO.INPUT)
-
                             bind(
                                 DataBindingBuilder.itemStack(
                                     { resultItemHandler.getStackInSlot(it) },
-                                    { itemStack -> resultItemHandler.setStackInSlot(it, itemStack) },
+                                    {},
                                 ).build(),
                             )
                         }

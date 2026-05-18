@@ -136,7 +136,7 @@ neoForge {
 
 dependencies {
     implementation("thedarkcolour:kotlinforforge-neoforge:$kotlinforforgeVersion")
-    compileOnly("mekanism:Mekanism:$mekanismVersion:api")
+    compileOnly("mekanism:Mekanism:$mekanismVersion")
     runtimeOnly("mekanism:Mekanism:$mekanismVersion")
     compileOnly("org.appliedenergistics:appliedenergistics2:$ae2Version:api")
     runtimeOnly("org.appliedenergistics:appliedenergistics2:$ae2Version")
