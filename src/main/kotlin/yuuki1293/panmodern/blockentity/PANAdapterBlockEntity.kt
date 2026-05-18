@@ -7,7 +7,12 @@ import com.lowdragmc.lowdraglib2.gui.ui.UI
 import com.lowdragmc.lowdraglib2.gui.ui.data.ScrollDisplay
 import com.lowdragmc.lowdraglib2.gui.ui.data.ScrollerMode
 import com.lowdragmc.lowdraglib2.gui.ui.element
-import com.lowdragmc.lowdraglib2.gui.ui.elements.*
+import com.lowdragmc.lowdraglib2.gui.ui.elements.asXeiPhantom
+import com.lowdragmc.lowdraglib2.gui.ui.elements.asXeiRecipeIngredient
+import com.lowdragmc.lowdraglib2.gui.ui.elements.itemSlot
+import com.lowdragmc.lowdraglib2.gui.ui.elements.label
+import com.lowdragmc.lowdraglib2.gui.ui.elements.scrollerView
+import com.lowdragmc.lowdraglib2.gui.ui.elements.withViewContainer
 import com.lowdragmc.lowdraglib2.gui.ui.event.UIEvents
 import com.lowdragmc.lowdraglib2.gui.ui.inventorySlots
 import com.lowdragmc.lowdraglib2.gui.ui.layout.px
