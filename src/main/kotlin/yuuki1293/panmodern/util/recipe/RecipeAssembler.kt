@@ -6,7 +6,7 @@ import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 
-object SingleOutputRecipeAssembler : IRecipeAssembler<RecipeInput> {
+object RecipeAssembler : IRecipeAssembler<RecipeInput> {
     override fun assemble(
         level: Level,
         recipeType: RecipeType<out Recipe<out RecipeInput?>?>,

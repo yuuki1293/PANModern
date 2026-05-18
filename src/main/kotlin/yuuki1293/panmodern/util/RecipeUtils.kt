@@ -12,13 +12,13 @@ import net.minecraft.world.level.block.Blocks
 import yuuki1293.panmodern.util.recipe.CraftingInputAdapter
 import yuuki1293.panmodern.util.recipe.RecipeSimulator
 import yuuki1293.panmodern.util.recipe.SingleItemInputAdapter
-import yuuki1293.panmodern.util.recipe.SingleOutputRecipeAssembler
+import yuuki1293.panmodern.util.recipe.RecipeAssembler
 import yuuki1293.panmodern.util.recipe.TwoItemInputAdapter
 
 object RecipeUtils {
-    private val craftingSimulator = RecipeSimulator(CraftingInputAdapter, SingleOutputRecipeAssembler)
-    private val singleItemSimulator = RecipeSimulator(SingleItemInputAdapter, SingleOutputRecipeAssembler)
-    private val twoItemSimulator = RecipeSimulator(TwoItemInputAdapter, SingleOutputRecipeAssembler)
+    private val craftingSimulator = RecipeSimulator(CraftingInputAdapter, RecipeAssembler)
+    private val singleItemSimulator = RecipeSimulator(SingleItemInputAdapter, RecipeAssembler)
+    private val twoItemSimulator = RecipeSimulator(TwoItemInputAdapter, RecipeAssembler)
 
     fun getRecipeType(block: Block): RecipeType<out Recipe<out RecipeInput?>?>? = when (block) {
         Blocks.CRAFTING_TABLE -> RecipeType.CRAFTING
