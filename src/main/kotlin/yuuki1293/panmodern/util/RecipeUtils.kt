@@ -10,9 +10,9 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import yuuki1293.panmodern.util.recipe.CraftingInputAdapter
+import yuuki1293.panmodern.util.recipe.RecipeAssembler
 import yuuki1293.panmodern.util.recipe.RecipeSimulator
 import yuuki1293.panmodern.util.recipe.SingleItemInputAdapter
-import yuuki1293.panmodern.util.recipe.RecipeAssembler
 import yuuki1293.panmodern.util.recipe.TwoItemInputAdapter
 
 object RecipeUtils {
